@@ -31,6 +31,42 @@ await app.listen({ port: 9000 });
 
 ## post
 post请求解析的参数最终会挂载到`context`的body参数上
+
+### json
+> post json
+```ts
+app.use(RequestParser.bodyParser())
+ctx.response.body = ctx['body']
+/* {
+    "name": "mz",
+    "obj": {
+      "age": "19"
+    }
+}*/
+```
+### urlencoded
+> post form-encode
+```ts
+app.use(RequestParser.bodyParser())
+ctx.response.body = ctx['body']
+/* {
+    "name": "mz",
+    "obj": {
+      "age": "19"
+    }
+}*/
+```
+### text
+> post text
+```ts
+app.use(RequestParser.bodyParser())
+ctx.response.body = ctx['body']
+/* {
+  'text': xxx
+}*/
+```
+
+完整示例
 ```ts
 import { Application, Router, Next, type BodyType, type BodyOptions } from "https://deno.land/x/oak@v12.5.0/mod.ts";
 import RequestParser from 'https://deno.land/x/m_oak_request_parser/mod.js'

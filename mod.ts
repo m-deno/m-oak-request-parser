@@ -31,11 +31,12 @@ const getParser = () => {
 }
 
 /**
- * post 请求参数解析
+ * post 请求参数解析，包括urlencoded|json|text类型参数解析
  * 
  * @example
  * 
  * ```ts
+ * // 包括urlencoded|json|text类型参数解析
  * app.use(RequestParser.bodyParser())
  *
  * router.post("/upload", (ctx: any) => {
