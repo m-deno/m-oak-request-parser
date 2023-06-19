@@ -22,10 +22,16 @@ const getParser = () => {
     // 遍历请求参数，重新组织数据
     const requestBody: Record<string, unknown> = {}
     for (const [key, value] of requestParams) {
-      requestBody[key] = value
+      try {
+        // 对数值、boolean进行解析
+        const result = JSON.parse((value as string).toLowerCase())
+        requestBody[key] = result
+      } catch {
+        requestBody[key] = value
+      }
     }
     // 将解析得到的数据挂载到ctx上
-    ctx['getParams'] = requestBody
+    ctx.state['params'] = requestBody
     await next()
   }
 }
@@ -61,7 +67,7 @@ const bodyParser = () => {
     // 找到解析器对数据进行解析
     const bodyValue = await parser?.parse(ctx) || {}
     // 将解析得到的数据挂载到ctx上
-    ctx['body'] = bodyValue
+    ctx.state['body'] = bodyValue
     await next()
   }
 }

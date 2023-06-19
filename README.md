@@ -9,13 +9,23 @@ import { Application, Router, Next, type BodyType, type BodyOptions } from "http
 import RequestParser from 'https://deno.land/x/m_oak_request_parser/mod.js'
 // import { getParser, bodyParser } from 'https://deno.land/x/m_oak_request_parser/mod.js'
 
+// 全局使用
 const app = new Application();
 const router = new Router();
 
 app.use(RequestParser.getParser())
 
 router.get("/upload", (ctx: any) => {
-  const { name, age } = ctx['getParams']
+  const { name, age } = ctx['params']
+  ctx.response.body = {
+    name,
+    age
+  }
+});
+
+// 单独使用
+router.get("/upload", RequestParser.getParser(), (ctx: any) => {
+  const { name, age } = ctx['params']
   ctx.response.body = {
     name,
     age
@@ -40,7 +50,7 @@ ctx.response.body = ctx['body']
 /* {
     "name": "mz",
     "obj": {
-      "age": "19"
+      "age": 19
     }
 }*/
 ```
@@ -52,7 +62,7 @@ ctx.response.body = ctx['body']
 /* {
     "name": "mz",
     "obj": {
-      "age": "19"
+      "age": 19
     }
 }*/
 ```
