@@ -16,7 +16,7 @@ const router = new Router();
 app.use(RequestParser.getParser())
 
 router.get("/upload", (ctx: any) => {
-  const { name, age } = ctx['params']
+  const { name, age } = ctx.state['params']
   ctx.response.body = {
     name,
     age
@@ -25,7 +25,7 @@ router.get("/upload", (ctx: any) => {
 
 // 单独使用
 router.get("/upload", RequestParser.getParser(), (ctx: any) => {
-  const { name, age } = ctx['params']
+  const { name, age } = ctx.state['params']
   ctx.response.body = {
     name,
     age
@@ -46,7 +46,7 @@ post请求解析的参数最终会挂载到`context`的body参数上
 > post json
 ```ts
 app.use(RequestParser.bodyParser())
-ctx.response.body = ctx['body']
+ctx.response.body = ctx.state['body']
 /* {
     "name": "mz",
     "obj": {
@@ -58,7 +58,7 @@ ctx.response.body = ctx['body']
 > post form-encode
 ```ts
 app.use(RequestParser.bodyParser())
-ctx.response.body = ctx['body']
+ctx.response.body = ctx.state['body']
 /* {
     "name": "mz",
     "obj": {
@@ -70,7 +70,7 @@ ctx.response.body = ctx['body']
 > post text
 ```ts
 app.use(RequestParser.bodyParser())
-ctx.response.body = ctx['body']
+ctx.response.body = ctx.state['body']
 /* {
   'text': xxx
 }*/
@@ -88,7 +88,7 @@ const router = new Router();
 app.use(RequestParser.bodyParser())
 
 router.post("/upload", (ctx: any) => {
-  ctx.response.body = ctx['body']
+  ctx.response.body = ctx.state['body']
 });
 
 app.use(router.routes());
